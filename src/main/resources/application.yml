@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: order-service
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/order_service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  tracing:
+    sampling:
+      probability: 1.0
+
+server:
+  port: 9094
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+resilience4j:
+  ratelimiter:
+    instances:
+      default:
+        limitForPeriod: 2
+        timeout-duration: 2
+        limitRefreshPeriod: 5s
+
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
