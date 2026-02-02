@@ -5,7 +5,7 @@ import com.order.orderservice.dto.OrderDTO;
 import com.order.orderservice.entity.Order;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface OrderMapper {
 
     Order mapToOrderEntity(Order order);
